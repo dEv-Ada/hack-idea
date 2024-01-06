@@ -14,15 +14,8 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div>
-      <Container className="mt-3">
-        <div className="d-flex float-end">
-          <AddNewModal />
-        </div>
-        <div className="float-end">
-          <Home />
-        </div>
-      </Container>
+    <div className="m-3">
+      <Home />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import Login from "./components/auth/login";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Ideadescription from "./components/description/ideadescription";
 import Header from "./components/header/header";
+import MyIdeas from "./components/idea/myIdeas";
 
 function App() {
   const router = createBrowserRouter([
@@ -26,6 +27,15 @@ function App() {
         <>
           <Header />
           <Ideadescription />
+        </>
+      ),
+    },
+    {
+      path: "/my-idea",
+      element: (
+        <>
+          <Header />
+          <MyIdeas />
         </>
       ),
     },
