@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Home from "../home/home";
 import { Container } from "react-bootstrap";
 import AddNewModal from "../home/addNewModal";
 
@@ -17,6 +18,9 @@ const Dashboard = () => {
       <Container className="mt-3">
         <div className="d-flex float-end">
           <AddNewModal />
+        </div>
+        <div className="float-end">
+          <Home />
         </div>
       </Container>
     </div>

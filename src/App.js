@@ -2,6 +2,7 @@ import "./App.css";
 import Dashboard from "./components/dashboard/dashboard";
 import Login from "./components/auth/login";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Ideadescription from "./components/description/ideadescription";
 import Header from "./components/header/header";
 
 function App() {
@@ -18,6 +19,15 @@ function App() {
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path: "/idea/:id",
+      element: (
+        <>
+          <Header />
+          <Ideadescription />
+        </>
+      ),
     },
   ]);
 
