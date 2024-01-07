@@ -68,7 +68,7 @@ body {
 }
 
 .idea-desc{
-  height: 300px;
+  height: 200px;
   overflow: auto;
 }
 
@@ -76,8 +76,8 @@ body {
   width: 9% !important;
 }
 
-.w-70{
-  width: 70% !important;
+.w-78{
+  width: 78% !important;
 }
 
 .item-row{
@@ -90,4 +90,20 @@ body {
   height: 78vh;
   overflow: auto;
   width: 100%;
+}
+
+.red-col{
+  color: red;
+}
+
+.carousel-indicators{
+  top: 100% !important;
+}
+
+.carousel-control-prev{
+  display: none !important;
+}
+
+.carousel-control-next{
+  display: none !important;
 }

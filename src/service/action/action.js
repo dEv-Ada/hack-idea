@@ -22,7 +22,7 @@ export const fetchAllIdea = async () => {
             Rackham.`,
       votes: 12,
       created_by: "Dip Adh",
-      created_at: "2nd Jan, 2024",
+      created_at: "2024-01-02",
       tag: "Technology",
     },
     {
@@ -47,8 +47,8 @@ export const fetchAllIdea = async () => {
             Rackham.`,
       votes: 23,
       created_by: "Dip Adh",
-      created_at: "2nd Jan, 2024",
-      tag: "Technology",
+      created_at: "2023-12-05",
+      tag: "Automation",
     },
     {
       id: 3,
@@ -72,7 +72,7 @@ export const fetchAllIdea = async () => {
             Rackham.`,
       votes: 10,
       created_by: "Dip Adh",
-      created_at: "2nd Jan, 2024",
+      created_at: "2023-11-13",
       tag: "Technology",
     },
     {
@@ -97,7 +97,7 @@ export const fetchAllIdea = async () => {
             Rackham.`,
       votes: 45,
       created_by: "Dip Adh",
-      created_at: "2nd Jan, 2024",
+      created_at: "2023-11-13",
       tag: "Technology",
     },
     {
@@ -122,8 +122,8 @@ export const fetchAllIdea = async () => {
             Rackham.`,
       votes: 30,
       created_by: "Dip Adh",
-      created_at: "2nd Jan, 2024",
-      tag: "Technology",
+      created_at: "2024-01-02",
+      tag: "Finance",
     },
     {
       id: 6,
@@ -147,8 +147,8 @@ export const fetchAllIdea = async () => {
             Rackham.`,
       votes: 6,
       created_by: "Dip Adh",
-      created_at: "2nd Jan, 2024",
-      tag: "Technology",
+      created_at: "2023-12-05",
+      tag: "Finance",
     },
     {
       id: 7,
@@ -172,7 +172,7 @@ export const fetchAllIdea = async () => {
             Rackham.`,
       votes: 0,
       created_by: "Dip Adh",
-      created_at: "2nd Jan, 2024",
+      created_at: "2023-12-05",
       tag: "Technology",
     },
     {
@@ -197,7 +197,7 @@ export const fetchAllIdea = async () => {
             Rackham.`,
       votes: 0,
       created_by: "Dip Adh",
-      created_at: "2nd Jan, 2024",
+      created_at: "2024-01-02",
       tag: "Technology",
     },
     {
@@ -222,8 +222,8 @@ export const fetchAllIdea = async () => {
             Rackham.`,
       votes: 0,
       created_by: "Dip Adh",
-      created_at: "2nd Jan, 2024",
-      tag: "Technology",
+      created_at: "2024-01-02",
+      tag: "Automation",
     },
   ];
   return data;
@@ -232,5 +232,11 @@ export const fetchAllIdea = async () => {
 export const fetchIdeaById = async (id) => {
   const allData = await fetchAllIdea();
   const data = allData.filter((el) => el.id === id);
+  return data;
+};
+
+export const fetchIdeaByTag = async (tag) => {
+  const allData = await fetchAllIdea();
+  const data = allData.filter((el) => el.tag === tag);
   return data;
 };
