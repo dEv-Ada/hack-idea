@@ -76,6 +76,10 @@ body {
   width: 9% !important;
 }
 
+.w-6{
+  width: 6% !important;
+}
+
 .w-78{
   width: 78% !important;
 }
@@ -94,6 +98,14 @@ body {
 
 .red-col{
   color: red;
+}
+
+.ind-red-col{
+  color: indianred;
+}
+
+.blue-col{
+  color: blue;
 }
 
 .carousel-indicators{

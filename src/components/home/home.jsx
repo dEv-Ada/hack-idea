@@ -1,16 +1,18 @@
 import { faHeart, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import { Badge, Card, Col, Row } from "react-bootstrap";
 import { fetchAllIdea } from "../../service/action/action";
 import { trimParagraph } from "../../service/utils/commonFunctions";
 import { useNavigate } from "react-router";
 import SearchIdea from "./searchIdea";
 import { faCalendarAlt } from "@fortawesome/free-regular-svg-icons";
+export const HomeContext = createContext("home");
 
 const Home = () => {
   const [allIdeas, setAllIdeas] = useState([]);
   const [filterIdeas, setFilterIdeas] = useState([]);
+  const [homePage, setHomePage] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,7 +22,7 @@ const Home = () => {
       setFilterIdeas(data);
     }
     fecthIdea();
-  }, []);
+  }, [homePage]);
 
   const searchIdea = (item) => {
     if (item === "") {
@@ -68,7 +70,9 @@ const Home = () => {
   return (
     <div>
       <div>
-        <SearchIdea searchIdea={searchIdea} sortIdeas={sortIdeas} />
+        <HomeContext.Provider value={setHomePage}>
+          <SearchIdea searchIdea={searchIdea} sortIdeas={sortIdeas} />
+        </HomeContext.Provider>
       </div>
       <Row className="item-row">
         {filterIdeas.map((item, index) => (

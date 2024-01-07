@@ -1,22 +1,39 @@
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { Badge, Card, Container } from "react-bootstrap";
+import { Badge, Card } from "react-bootstrap";
 import { useParams } from "react-router";
-import { fetchIdeaById } from "../../service/action/action";
+import { editIdea, fetchIdeaById } from "../../service/action/action";
 import { faCalendarAlt, faHeart } from "@fortawesome/free-regular-svg-icons";
 import SimilarIdea from "../similar/similarIdea";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+
+library.add(far, fas);
 
 const Ideadescription = () => {
   const param = useParams();
   const [idea, setIdea] = useState([]);
+  const [selfVoting, setSelfVoting] = useState(false);
   useEffect(() => {
     async function fetchIdea() {
       const data = await fetchIdeaById(Number(param.id));
       setIdea(data);
+      setSelfVoting(false);
     }
     fetchIdea();
-  }, [param]);
+  }, [param, selfVoting]);
+
+  const handleClick = () => {
+    editIdea(idea[0].id, {
+      ...idea[0],
+      votes: !idea[0].selfVote ? idea[0].votes + 1 : idea[0].votes - 1,
+      selfVote: !idea[0].selfVote,
+    });
+    setSelfVoting(true);
+  };
+
   return (
     <div className="m-2">
       {idea.length > 0 && (
@@ -29,7 +46,12 @@ const Ideadescription = () => {
           </div>
           <div className="mb-2">
             <span className="pe-3">
-              <FontAwesomeIcon icon={faHeart} /> {idea[0].votes + " votes"}
+              <FontAwesomeIcon
+                icon={idea[0].selfVote ? ["fas", "heart"] : ["far", "heart"]}
+                className={idea[0].selfVote ? "red-col" : ""}
+                onClick={handleClick}
+              />{" "}
+              {idea[0].votes + " votes"}
             </span>
             <span className="pe-3">
               <FontAwesomeIcon icon={faUser} /> {idea[0].created_by}

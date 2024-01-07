@@ -1,13 +1,71 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import {
+  addNewIdea,
+  editIdea,
+  fetchIdeaById,
+  fetchTag,
+} from "../../service/action/action";
+import { HomeContext } from "./home";
 
-const AddNewModal = () => {
+const AddNewModal = ({
+  data = false,
+  setShowModal = () => {},
+  editId = null,
+  setEditId = () => {},
+}) => {
   const [show, setShow] = useState(false);
+  const [tags, setTags] = useState([]);
+  const [newIdea, setNewIdea] = useState();
+  const setHomePage = useContext(HomeContext);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  useEffect(() => {
+    async function fetchTags() {
+      const data = await fetchTag();
+      setTags(data);
+    }
+    fetchTags();
+  }, []);
+
+  useEffect(() => {
+    setShow(data);
+    async function fetchIdea() {
+      const data = await fetchIdeaById(editId);
+      setNewIdea(data[0]);
+    }
+    fetchIdea();
+  }, [data]);
+
+  const handleChange = (e) => {
+    setNewIdea((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = () => {
+    if (!editId) {
+      addNewIdea(newIdea);
+    } else {
+      editIdea(editId, newIdea);
+    }
+    handleClose();
+  };
+
+  const handleClose = () => {
+    setShow(false);
+    setShowModal(false);
+    setEditId();
+    setHomePage(true);
+  };
+  const handleShow = () => {
+    setEditId();
+    setNewIdea({});
+    setShow(true);
+    setHomePage(false);
+  };
   return (
     <div>
       <Button variant="primary" className="float-end mb-2" onClick={handleShow}>
@@ -20,38 +78,47 @@ const AddNewModal = () => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>New Idea</Modal.Title>
+          <Modal.Title>{editId ? newIdea?.title : "New Idea"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group
-              as={Row}
-              className="mb-3"
-              controlId="exampleForm.ControlInput1"
-            >
+            <Form.Group as={Row} className="mb-3">
               <Col>
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter a title for your idea"
+                  id="title"
+                  value={newIdea?.title}
+                  onChange={handleChange}
                 />
               </Col>
               <Col>
                 <Form.Label>Tag</Form.Label>
-                <Form.Select aria-label="Default select example">
-                  <option>Open this select menu</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                <Form.Select
+                  aria-label="Default select example"
+                  id="tag"
+                  onChange={handleChange}
+                  value={newIdea?.tag}
+                >
+                  <option value="" selected disabled>
+                    Select Tag
+                  </option>
+                  {tags.map((item) => (
+                    <option value={item.tag}>{item.tag}</option>
+                  ))}
                 </Form.Select>
               </Col>
             </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
+            <Form.Group className="mb-3">
               <Form.Label>Description</Form.Label>
-              <Form.Control as="textarea" rows={3} />
+              <Form.Control
+                as="textarea"
+                rows={3}
+                id="description"
+                onChange={handleChange}
+                value={newIdea?.description}
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -59,7 +126,7 @@ const AddNewModal = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleSubmit}>
             Submit
           </Button>
         </Modal.Footer>
