@@ -1,4 +1,5 @@
 import "./App.css";
+import "./responsive.css";
 import Dashboard from "./components/dashboard/dashboard";
 import Login from "./components/auth/login";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";

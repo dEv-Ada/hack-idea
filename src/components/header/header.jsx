@@ -10,7 +10,7 @@ const Header = () => {
     navigate("/login");
   };
   return (
-    <Navbar collapseOnSelect bg="primary" data-bs-theme="dark" expand="lg">
+    <Navbar bg="primary" data-bs-theme="dark" expand="lg">
       <Container>
         <Navbar.Brand href="/">Hack-Idea</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -19,11 +19,11 @@ const Header = () => {
             <Nav.Link href="/my-idea">My Ideas</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link className="avatar" eventKey={2} href="#memes">
+            <Nav.Link className="avatar" eventKey={2} href="#">
               <NavDropdown
                 className="avatar-name"
                 title={userName !== null && userName[0].toUpperCase()}
-                id="collapsible-nav-dropdown"
+                id="basic-nav-dropdown"
               >
                 <NavDropdown.Item>{userName}</NavDropdown.Item>
                 <NavDropdown.Item onClick={handleLogout}>

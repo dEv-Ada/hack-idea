@@ -1,0 +1,8 @@
+@media (min-width:320px) and (max-width:575px) {
+    .login-card {
+        width: 93%;
+        position: absolute !important;
+        top: 25%;
+        left: 4%;
+    }
+  }
