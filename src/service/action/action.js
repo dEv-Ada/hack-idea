@@ -1,5 +1,8 @@
+import { json } from "react-router";
 import { formatDate } from "../utils/commonFunctions";
 import { data } from "../utils/data";
+
+
 
 export const fetchTag = async () => {
   const data = [
@@ -29,7 +32,9 @@ export const fetchTag = async () => {
 };
 
 export const fetchAllIdea = async () => {
-  return data;
+  const storedData= localStorage.getItem("ideas");
+  if(storedData!==null && storedData.length>0){return JSON.parse(storedData);}
+ else{localStorage.setItem("ideas",JSON.stringify(data)); return data;}
 };
 
 export const fetchIdeaById = async (id) => {
@@ -47,30 +52,36 @@ export const fetchIdeaByTag = async (tag) => {
 export const fetchMyIdea = async () => {
   const user = sessionStorage.getItem("user_id");
   const allData = await fetchAllIdea();
-  const data = allData.filter((el) => el.created_by === user);
-  return data;
+  const filter_data = allData.filter((el) => el.created_by === user);
+  return filter_data;
 };
 
 export const addNewIdea = async (body) => {
-  const new_id = data[data.length - 1].id + 1;
+  const allData = await fetchAllIdea();
+  const new_id = allData[allData.length - 1].id + 1;
   const user = sessionStorage.getItem("user_id");
   const date = formatDate(new Date());
-  data.push({
+  allData.push({
     ...body,
     id: new_id,
     created_at: date,
     created_by: user,
     votes: 0,
-    selfVote: false,
+    selfVote: [],
   });
+  localStorage.setItem("ideas",JSON.stringify(allData));
 };
 
 export const editIdea = async (id, body) => {
-  const index = data.findIndex((el) => el.id === id);
-  data.splice(index, 1, body);
+  const allData = await fetchAllIdea();
+  const index = allData.findIndex((el) => el.id === id);
+  allData.splice(index, 1, body);
+  localStorage.setItem("ideas",JSON.stringify(allData));
 };
 
 export const deleteIdea = async (id) => {
-  const index = data.findIndex((el) => el.id === id);
-  data.splice(index, 1);
+  const allData = await fetchAllIdea();
+  const index = allData.findIndex((el) => el.id === id);
+  allData.splice(index, 1);
+  localStorage.setItem("ideas",JSON.stringify(allData));
 };

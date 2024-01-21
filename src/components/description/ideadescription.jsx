@@ -16,6 +16,7 @@ const Ideadescription = () => {
   const param = useParams();
   const [idea, setIdea] = useState([]);
   const [selfVoting, setSelfVoting] = useState(false);
+  const user = sessionStorage.getItem("user_id");
   useEffect(() => {
     async function fetchIdea() {
       const data = await fetchIdeaById(Number(param.id));
@@ -28,8 +29,12 @@ const Ideadescription = () => {
   const handleClick = () => {
     editIdea(idea[0].id, {
       ...idea[0],
-      votes: !idea[0].selfVote ? idea[0].votes + 1 : idea[0].votes - 1,
-      selfVote: !idea[0].selfVote,
+      votes: !idea[0]?.selfVote?.includes(user)
+        ? idea[0].votes + 1
+        : idea[0].votes - 1,
+      selfVote: idea[0]?.selfVote?.includes(user)
+        ? idea[0].selfVote.filter((el) => el !== user)
+        : [...idea[0].selfVote, user],
     });
     setSelfVoting(true);
   };
@@ -47,8 +52,12 @@ const Ideadescription = () => {
           <div className="mb-2">
             <span className="pe-3">
               <FontAwesomeIcon
-                icon={idea[0].selfVote ? ["fas", "heart"] : ["far", "heart"]}
-                className={idea[0].selfVote ? "red-col" : ""}
+                icon={
+                  idea[0].selfVote.includes(user)
+                    ? ["fas", "heart"]
+                    : ["far", "heart"]
+                }
+                className={idea[0].selfVote.includes(user) ? "red-col" : ""}
                 onClick={handleClick}
               />{" "}
               {idea[0].votes + " votes"}

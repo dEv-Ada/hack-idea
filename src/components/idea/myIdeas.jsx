@@ -18,16 +18,16 @@ const MyIdeas = () => {
       setMyIdea(data);
     }
     fetchData();
-  }, [editId]);
+  }, [show || editId]);
 
   const handleEdit = (id) => {
     setShowModal(true);
     setEditId(id);
   };
 
-  const handleDelete = (id) => {
-    setEditId(id);
+  const handleDelete = async (id) => {
     deleteIdea(id);
+    setEditId(id);
   };
 
   const handleClick = (id) => {
@@ -59,27 +59,28 @@ const MyIdeas = () => {
               </tr>
             </thead>
             <tbody>
-              {myIdea.map((item) => (
-                <tr key={item.id} onClick={() => handleClick(item.id)}>
-                  <td>{item.id}</td>
-                  <td>{item.title}</td>
-                  <td>{item.tag}</td>
-                  <td>{item.votes}</td>
-                  <td>{item.created_at}</td>
-                  <td className="w-6">
-                    <FontAwesomeIcon
-                      icon={faPenAlt}
-                      className="pe-4 blue-col"
-                      onClick={() => handleEdit(item.id)}
-                    />
-                    <FontAwesomeIcon
-                      icon={faTrash}
-                      className="ind-red-col"
-                      onClick={() => handleDelete(item.id)}
-                    />
-                  </td>
-                </tr>
-              ))}
+              {myIdea &&
+                myIdea.map((item) => (
+                  <tr key={item.id}>
+                    <td onClick={() => handleClick(item.id)}>{item.id}</td>
+                    <td onClick={() => handleClick(item.id)}>{item.title}</td>
+                    <td>{item.tag}</td>
+                    <td>{item.votes}</td>
+                    <td>{item.created_at}</td>
+                    <td className="w-6">
+                      <FontAwesomeIcon
+                        icon={faPenAlt}
+                        className="pe-4 blue-col"
+                        onClick={() => handleEdit(item.id)}
+                      />
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        className="ind-red-col"
+                        onClick={() => handleDelete(item.id)}
+                      />
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </Table>
         </div>

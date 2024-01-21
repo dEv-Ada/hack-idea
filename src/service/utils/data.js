@@ -20,10 +20,10 @@ export const data = [
             accompanied by English versions from the 1914 translation by H.
             Rackham.`,
     votes: 12,
-    selfVote: false,
     created_by: "Tushar",
     created_at: "2024-01-02",
     tag: "Technology",
+    selfVote:[]
   },
   {
     id: 2,
@@ -49,6 +49,7 @@ export const data = [
     created_by: "Tushar",
     created_at: "2023-12-05",
     tag: "Automation",
+    selfVote:[]
   },
   {
     id: 3,
@@ -74,6 +75,7 @@ export const data = [
     created_by: "Dip Adh",
     created_at: "2023-11-13",
     tag: "Technology",
+    selfVote:[]
   },
   {
     id: 4,
@@ -99,6 +101,7 @@ export const data = [
     created_by: "Dip Adh",
     created_at: "2023-11-13",
     tag: "Technology",
+    selfVote:[]
   },
   {
     id: 5,
@@ -124,6 +127,7 @@ export const data = [
     created_by: "Devidip",
     created_at: "2024-01-02",
     tag: "Finance",
+    selfVote:[]
   },
   {
     id: 6,
@@ -149,6 +153,7 @@ export const data = [
     created_by: "Dip Adh",
     created_at: "2023-12-05",
     tag: "Finance",
+    selfVote:[]
   },
   {
     id: 7,
@@ -174,6 +179,7 @@ export const data = [
     created_by: "Dip Adh",
     created_at: "2023-12-05",
     tag: "Technology",
+    selfVote:[]
   },
   {
     id: 8,
@@ -199,6 +205,7 @@ export const data = [
     created_by: "Devidip",
     created_at: "2024-01-02",
     tag: "Technology",
+    selfVote:[]
   },
   {
     id: 9,
@@ -224,5 +231,6 @@ export const data = [
     created_by: "Devidip",
     created_at: "2024-01-02",
     tag: "Automation",
+    selfVote:[]
   },
 ];

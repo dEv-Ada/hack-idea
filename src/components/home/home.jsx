@@ -1,18 +1,18 @@
 import { faHeart, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState, createContext } from "react";
-import { Badge, Card, Col, Row } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Badge, Card, Col, Form, Row } from "react-bootstrap";
 import { fetchAllIdea } from "../../service/action/action";
 import { trimParagraph } from "../../service/utils/commonFunctions";
 import { useNavigate } from "react-router";
 import SearchIdea from "./searchIdea";
 import { faCalendarAlt } from "@fortawesome/free-regular-svg-icons";
-export const HomeContext = createContext("home");
+import AddNewModal from "./addNewModal";
 
 const Home = () => {
   const [allIdeas, setAllIdeas] = useState([]);
   const [filterIdeas, setFilterIdeas] = useState([]);
-  const [homePage, setHomePage] = useState(true);
+  const [show, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const Home = () => {
       setFilterIdeas(data);
     }
     fecthIdea();
-  }, [homePage]);
+  }, [show]);
 
   const searchIdea = (item) => {
     if (item === "") {
@@ -70,9 +70,10 @@ const Home = () => {
   return (
     <div>
       <div>
-        <HomeContext.Provider value={setHomePage}>
+        <Form className="d-flex">
           <SearchIdea searchIdea={searchIdea} sortIdeas={sortIdeas} />
-        </HomeContext.Provider>
+          <AddNewModal data={show} setShowModal={setShowModal} />
+        </Form>
       </div>
       <Row className="item-row">
         {filterIdeas.map((item, index) => (

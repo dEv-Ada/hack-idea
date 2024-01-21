@@ -8,7 +8,6 @@ import {
   fetchIdeaById,
   fetchTag,
 } from "../../service/action/action";
-import { HomeContext } from "./home";
 
 const AddNewModal = ({
   data = false,
@@ -19,7 +18,6 @@ const AddNewModal = ({
   const [show, setShow] = useState(false);
   const [tags, setTags] = useState([]);
   const [newIdea, setNewIdea] = useState();
-  const setHomePage = useContext(HomeContext);
 
   useEffect(() => {
     async function fetchTags() {
@@ -39,32 +37,37 @@ const AddNewModal = ({
   }, [data]);
 
   const handleChange = (e) => {
-    setNewIdea((prevState) => ({
-      ...prevState,
-      [e.target.id]: e.target.value,
-    }));
+    if (e.target.value.trim().length > 0) {
+      setNewIdea((prevState) => ({
+        ...prevState,
+        [e.target.id]: e.target.value.trim(),
+      }));
+    }
   };
 
   const handleSubmit = () => {
-    if (!editId) {
-      addNewIdea(newIdea);
+    if (Object.keys(newIdea).length < 3) {
+      alert("Please fill all the fields");
     } else {
-      editIdea(editId, newIdea);
+      if (!editId) {
+        addNewIdea(newIdea);
+      } else {
+        editIdea(editId, newIdea);
+      }
+      handleClose();
     }
-    handleClose();
   };
 
   const handleClose = () => {
     setShow(false);
     setShowModal(false);
     setEditId();
-    setHomePage(true);
   };
   const handleShow = () => {
     setEditId();
     setNewIdea({});
     setShow(true);
-    setHomePage(false);
+    setShowModal(true);
   };
   return (
     <div>
@@ -91,6 +94,7 @@ const AddNewModal = ({
                   id="title"
                   value={newIdea?.title}
                   onChange={handleChange}
+                  required
                 />
               </Col>
               <Col>
@@ -118,6 +122,7 @@ const AddNewModal = ({
                 id="description"
                 onChange={handleChange}
                 value={newIdea?.description}
+                required
               />
             </Form.Group>
           </Form>
@@ -126,7 +131,16 @@ const AddNewModal = ({
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSubmit}>
+          <Button
+            disabled={
+              newIdea !== undefined &&
+              newIdea.title === "" &&
+              newIdea.tag === "" &&
+              newIdea.description === ""
+            }
+            variant="primary"
+            onClick={handleSubmit}
+          >
             Submit
           </Button>
         </Modal.Footer>
